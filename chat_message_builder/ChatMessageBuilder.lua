@@ -22,8 +22,8 @@ No colors and style:
 
 The text is red:
 	local test = cChatMessageBuilder.new("Welcome to minecraft!"):Color(cChatColor.Red)
-	
-	
+
+
 Set text minecraft to bold and color yellow:
 	local test = cChatMessageBuilder.new("Welcome to "):Color(cChatColor.Red):
 	Append(" minecraft!"):Bold():Color(cChatColor.Yellow)
@@ -47,20 +47,20 @@ And at last, the hover text with color light blue:
 
 
 --- Create a message builder.
--- The arg can be a single String or multiple Strings, 
+-- The arg can be a single String or multiple Strings,
 -- separated by a comma.
 function cChatMessageBuilder.new(...)
 	local self = setmetatable({}, cChatMessageBuilder)
-	
+
 	-- List of cChatMessagePart
 	self.m_Parts = {}
-	
+
 	-- The current message part
 	self.m_Current = cChatMessagePart.new(self:CreateText(arg))
-	
+
 	-- Will contain the created json string, if the function Create has been called
 	self.m_MessageJson = nil
-	
+
 	return self
 end
 
@@ -83,7 +83,7 @@ end
 
 
 --- Adds a new message part with the text
--- a_Text: The arg can be a single String or multiple Strings, 
+-- a_Text: The arg can be a single String or multiple Strings,
 -- separated by a comma.
 function cChatMessageBuilder:Append(...)
 	table.insert(self.m_Parts, self.m_Current)
@@ -155,9 +155,9 @@ end
 --- Add click event in current message part
 -- a_Clickaction: A String
 	-- open_url
-    -- open_file
-    -- run_command
-    -- suggest_command
+	-- open_file
+	-- run_command
+	-- suggest_command
 -- a_Text: A string
 	-- open_url:		HTTP link
 	-- open_file:		Path to file
@@ -172,9 +172,9 @@ end
 
 --- Add hover event in current message part
 -- a_Hoveraction: A String
-    -- show_text
-    -- show_achievement
-    -- show_item
+	-- show_text
+	-- show_achievement
+	-- show_item
 -- a_ChatMessageBuilder:
 -- A instance of cChatMessageBuilder. Don't call function Create(),
 -- if the message is completed
@@ -191,49 +191,49 @@ function cChatMessageBuilder:Create()
 	if self.m_MessageJson then
 		return self.m_MessageJson
 	end
-	
+
 	-- Add current part to list
 	table.insert(self.m_Parts, self.m_Current)
-	
+
 	-- The table for all parts
 	local tbMessage = {}
-	
+
 	-- Loop over every message part
 	for _, messagePart in ipairs(self.m_Parts) do
 		local tbPart = {}
-		
+
 		-- Set text
-		tbPart["text"] = messagePart.m_Text
-		
+		tbPart.text = messagePart.m_Text
+
 		-- Set color
-		tbPart["color"] = COLORS_CUBERITE_MC[messagePart.m_Color]
-		
+		tbPart.color = COLORS_CUBERITE_MC[messagePart.m_Color]
+
 		-- Set style
-		tbPart["obfuscated"] = messagePart.m_Obfuscated
-		tbPart["bold"] = messagePart.m_Bold
-		tbPart["strikethrough"] = messagePart.m_Striketrough
-		tbPart["underlined"] = messagePart.m_Underlined
-		tbPart["italic"] = messagePart.m_Italic
+		tbPart.obfuscated = messagePart.m_Obfuscated
+		tbPart.bold = messagePart.m_Bold
+		tbPart.strikethrough = messagePart.m_Striketrough
+		tbPart.underlined = messagePart.m_Underlined
+		tbPart.italic = messagePart.m_Italic
 
 		-- Add click part
 		if messagePart.m_ClickEvent ~= nil then
 			local tbClick = {}
-			tbClick["action"] = messagePart.m_ClickEvent.m_Action
-			tbClick["value"] = messagePart.m_ClickEvent.m_Text
-			tbPart["clickEvent"] =  tbClick
+			tbClick.action = messagePart.m_ClickEvent.m_Action
+			tbClick.value = messagePart.m_ClickEvent.m_Text
+			tbPart.clickEvent =  tbClick
 		end
-		
+
 		-- Add hover part
 		if messagePart.m_HoverEvent ~= nil then
 			local tbHover = {}
-			tbHover["action"] = messagePart.m_HoverEvent.m_Action
-			tbHover["value"] = messagePart.m_HoverEvent:Create()
-			tbPart["hoverEvent"] = tbHover			
+			tbHover.action = messagePart.m_HoverEvent.m_Action
+			tbHover.value = messagePart.m_HoverEvent:Create()
+			tbPart.hoverEvent = tbHover
 		end
-		
+
 		table.insert(tbMessage, tbPart)
 	end
-	
+
 	self.m_MessageJson = cJson:Serialize(tbMessage)
 	return self.m_MessageJson
 end

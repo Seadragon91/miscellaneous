@@ -1,7 +1,7 @@
 function Initialize(Plugin)
 	Plugin:SetName("Test_ChatMessageBuilder")
 	Plugin:SetVersion(1)
-	
+
 	-- Colors: Cuberite to Minecraft
 	COLORS_CUBERITE_MC = {}
 	COLORS_CUBERITE_MC[cChatColor.Black] = "black"
@@ -20,10 +20,10 @@ function Initialize(Plugin)
 	COLORS_CUBERITE_MC[cChatColor.Navy] = "dark_blue"
 	COLORS_CUBERITE_MC[cChatColor.Purple] = "dark_purple"
 	COLORS_CUBERITE_MC[cChatColor.Rose] = "red"
-	
+
 	-- Style
 	COLORS_CUBERITE_MC[cChatColor.Plain] = "reset"
-	
+
 	cPluginManager.BindCommand("/test", "test", CmdTest, " - Prints the message")
 	return true
 end
@@ -35,7 +35,7 @@ function CmdTest(a_Split, a_Player)
 		:Color(cChatColor.Blue)
 		:Click("run_command", "/help"):Hover("show_text", cChatMessageBuilder.new("Good luck and have fun :-)")
 		:Color(cChatColor.LightBlue))
-	
+
 	a_Player:SendMessageRaw(test:Create())
 	return true
 end

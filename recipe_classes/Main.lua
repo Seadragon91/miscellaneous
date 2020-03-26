@@ -1,10 +1,10 @@
 function Initialize(a_Plugin)
-    a_Plugin:SetName("RecipeTest")
-    a_Plugin:SetVersion(1)
-    
+	a_Plugin:SetName("RecipeTest")
+	a_Plugin:SetVersion(1)
+
 	CreateRecipes()
 	cPluginManager:AddHook(cPluginManager.HOOK_CRAFTING_NO_RECIPE, OnCraftingNoRecipe)
-    return true
+	return true
 end
 
 
@@ -70,7 +70,7 @@ function CreateRecipes()
 		:SetIngredient("S", E_BLOCK_STONE)
 		:SetIngredient("S", E_BLOCK_COBBLESTONE) -- Different item types for same char possible
 		:SetIngredient("B", E_ITEM_BLAZE_ROD),
-		
+
 		cShapedRecipe.new(cItem(E_BLOCK_OBSIDIAN, 1))
 		:Shape(" S","SB")
 		:SetIngredient("S", E_BLOCK_STONE)
